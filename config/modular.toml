@@ -1,0 +1,40 @@
+[info]
+local_path = '/home/zxmath/Machine_Learning_Arithmetic-_object/data'
+
+#data_set = "combined_data_3.h5"
+data_set = "combined_data_7.h5"
+
+
+
+# List some features and targets for training and testing 
+
+
+features = ['level', 'genus', 'rank', 'cusps', 'rational_cusps', 'log_conductor', 'coarse_class_num','coarse_level']
+catorigical_features = ['pointless', 'contains_negative_one', 'level_is_squarefree']
+target = 'q_gonality'
+#target = 'genus'
+
+# param
+[params_xgb]
+
+objective = 'reg:squarederror'
+max_depth = 10
+learning_rate = 0.02
+n_estimators = 600
+subsample = 0.6
+colsample_bytree = 0.8
+random_state = 42
+device = 'gpu'
+# tree_method = 'gpu_hist'
+# predictor = 'gpu_predictor'
+[params_lgb]
+
+[FFN]
+
+dropout_rate = 0.1
+ffn_hidden_dims =  [256, 128, 128, 64, 32]
+
+[LLM]
+max_iter = 100
+
+prompt_name = 'feature_extraction.txt'
