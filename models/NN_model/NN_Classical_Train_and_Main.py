@@ -402,7 +402,7 @@ def classical_train(base_path,
     # choose the model with best valid accuracy, then evaluate its performaces
     # choose the idx in valid_accuracies with highest value
     best_valid_idx = valid_accuracies.index(max(valid_accuracies))
-    best_valid_model_path = os.path.join(save_path, "best_valid_models", "best_valid_model_"+str(best_valid_idx+1)+".pt")
+    best_valid_model_path = os.path.join(save_path, "all_models", "model_"+str(best_valid_idx+1)+".pt")
     best_valid_model = torch.load(best_valid_model_path, weights_only = False)
     accuracy_train, r2_train, rmse_train, accuracy_val, r2_val, rmse_val, accuracy_test, r2_test, rmse_test, accuracy_bd_test = performence_all(model = best_valid_model,
                                                                                                                                                 X_train=X_train,
@@ -437,6 +437,9 @@ def classical_train(base_path,
         },
         "running_times": {
             "training_time": float(end_times - start_time)
+        },
+        "best_model": {
+            "best_model_idx": int(best_valid_idx + 1)
         }
     }
 
