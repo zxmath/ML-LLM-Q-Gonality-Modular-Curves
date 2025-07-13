@@ -1,5 +1,5 @@
 [info]
-local_path = '/home/zxmath/Machine_Learning_Arithmetic-_object/data'
+local_path = "data"
 
 
 
@@ -18,6 +18,7 @@ list_features = ['canonical_conjugator', 'conductor']
 target = "q_gonality"
 #target = 'genus'
 
+saved_model_path = "saved_models"
 # param
 [params_xgb]
 
@@ -42,3 +43,33 @@ ffn_hidden_dims =  [256, 128, 128, 64, 32]
 max_iter = 100
 
 prompt_name = 'feature_extraction.txt'
+
+[FT_Transformer]
+numerical_features = ["level", "genus", "rank", "cusps", "rational_cusps", "log_conductor", "coarse_class_num", "coarse_level"]
+catorigical_features = ["pointless", "contains_negative_one", "level_is_squarefree"]
+list_features = ['canonical_conjugator', 'conductor']
+target = "q_gonality"
+
+# Model parameters
+d_model = 128
+n_layers = 4
+activation = "gelu"
+dropout = 0.1
+nhead = 8
+dim_feedforward = 512
+
+# Training parameters
+epochs = 270
+learning_rate = 5e-4
+weight_decay = 1e-4
+patience = 50
+batch_size = 64
+
+# Categorical cardinalities (you may need to adjust these based on your data)
+cat_cardinalities = {pointless = 2, contains_negative_one = 2, level_is_squarefree = 2}
+# List cardinalities (adjust based on your data)
+list_cardinalities = {canonical_conjugator = 1000, conductor = 1000}
+
+
+
+

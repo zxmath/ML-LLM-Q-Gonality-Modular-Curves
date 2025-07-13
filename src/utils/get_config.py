@@ -12,19 +12,31 @@ except ModuleNotFoundError:
         tomllib = None # Set to None to avoid further errors in this example
         toml = None
 
+import os
+
+def get_project_root():
+    """Get the project root directory."""
+    current_file = os.path.abspath(__file__)
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(current_file)))
+    return project_root
 
 def load_toml_config(file_path):
     """
-    Loads a TOML configuration file.
+    Loads a TOML configuration file and resolves relative paths.
 
     Args:
-        file_path (str): The path to the TOML file.
+        file_path (str): The path to the TOML file (can be relative or absolute).
 
     Returns:
-        dict: A dictionary containing the parsed TOML data, 
+        dict: A dictionary containing the parsed TOML data with resolved paths, 
               or None if an error occurs.
     """
     try:
+        # Resolve relative path to absolute path
+        if not os.path.isabs(file_path):
+            project_root = get_project_root()
+            file_path = os.path.join(project_root, file_path)
+        
         with open(file_path, 'rb') as f: # Open in binary read mode
             if hasattr(tomllib, 'load'): # Check if tomllib (Python 3.11+) is available and has 'load'
                 config_data = tomllib.load(f)
@@ -39,6 +51,20 @@ def load_toml_config(file_path):
             else:
                 print("No suitable TOML library available.")
                 return None
+        
+        # Resolve relative paths in the config
+        if 'info' in config_data:
+            info = config_data['info']
+            project_root = get_project_root()
+            
+            # Resolve local_path
+            if 'local_path' in info and not os.path.isabs(info['local_path']):
+                info['local_path'] = os.path.join(project_root, info['local_path'])
+            
+            # Resolve saved_model_path
+            if 'saved_model_path' in info and not os.path.isabs(info['saved_model_path']):
+                info['saved_model_path'] = os.path.join(project_root, info['saved_model_path'])
+        
         return config_data
     except FileNotFoundError:
         print(f"Error: The file '{file_path}' was not found.")
