@@ -83,7 +83,7 @@ def main():
         
         df_train = pd.read_csv(train_file)
         df_val = pd.read_csv(valid_file)
-        df_test = pd.read_csv(valid_file)
+        df_test = pd.read_csv(test_file)
         qonality_diff = pd.read_csv(diff_file)
         
         print(f"Training data shape: {df_train.shape}")
@@ -246,6 +246,7 @@ def main():
             weight_decay=1e-4,
             device=device,
             patience=50,
+            fold_idx=fold,
             
         )
 
