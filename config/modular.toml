@@ -36,8 +36,18 @@ device = 'gpu'
 
 [FFN]
 
-dropout_rate = 0.1
-ffn_hidden_dims =  [256, 128, 128, 64, 32]
+nn_data_path = "data\\Cross-Validation-Data"
+nn_path = 'models\\NN_model'
+nn_result_path = 'results\\NN-results'
+
+batch_size = 32
+learning_rate = 0.0001
+hidden_sizes =  [128, 32]
+optimizer = 'Adam'
+criterion = "MSELoss" # when use this hyperparam,need to translate to nn.MSELoss()
+num_epochs = 2000
+activation_function = "LeakyReLU" #name of function
+negative_slope = 0.01 # willu use nn.LeakyReLU(negative_slope = 0.01)
 
 [LLM]
 max_iter = 100
