@@ -15,6 +15,13 @@ from sympy.strategies.core import switch
 # from torchvision import datasets, transforms
 from torch.utils.data import Dataset, DataLoader, ConcatDataset
 from collections import namedtuple
+import os
+import sys
+# Add the project root to Python path if not already there
+project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+sys.path.insert(0, os.path.join(project_root, 'src'))
 from src.utils.get_config import load_toml_config
 
 
@@ -466,7 +473,7 @@ def experiment_1():
         'hidden_sizes': [[128, 32]],
         'optimizer': ['Adam'],
         'criterion': [nn.MSELoss()],
-        'num_epochs': [1],
+        'num_epochs': [2000],
         'activation_function': [nn.LeakyReLU(negative_slope=0.01)],
         'X_col_names': [["genus", "rank", "cusps", "rational_cusps", "level", "log_conductor", "coarse_class_num", "coarse_level",
              "canonical_conjugator"]],  #
@@ -534,7 +541,7 @@ def experiment_2():
         'hidden_sizes': [[128, 32]],
         'optimizer': ['Adam'],
         'criterion': [nn.MSELoss()],
-        'num_epochs': [1],
+        'num_epochs': [2000],
         'activation_function': [nn.LeakyReLU(negative_slope=0.01)],
         'X_col_names': [
             ["genus", "rank", "cusps", "rational_cusps", "level", "log_conductor", "coarse_class_num", "coarse_level",
@@ -592,6 +599,6 @@ def experiment_2():
 
 
 if __name__ == "__main__":
-    #experiment_1() # loop for 5 different split experiment
+    experiment_1() # loop for 5 different split experiment
     experiment_2() # train for small levels, test for large levels
 
