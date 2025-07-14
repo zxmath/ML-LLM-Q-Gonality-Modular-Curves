@@ -219,7 +219,7 @@ def main():
             nhead=8,
             num_layers=4,
             dim_feedforward=512,
-            dropout=0.0,
+            dropout=0.15,
             output_dim=1,
             numerical_features=model_config['numerical_features'],
             categorical_configs=model_config['categorical_configs'],
@@ -356,15 +356,15 @@ def main():
             'accuracy': accuracy_diff_ft
         }
 
-
+        time = datetime.now().strftime("%Y%m%d_%H%M%S")
         # save train_evaluation, val_evaluation, test_evaluation, diff_evaluation to json
-        with open(os.path.join(results_dir, f"train_evaluation_{fold}.json"), "w") as f:
+        with open(os.path.join(results_dir, f"train_evaluation_{fold}_{time}.json"), "w") as f:
             json.dump(train_evaluation[fold], f)
-        with open(os.path.join(results_dir, f"val_evaluation_{fold}.json"), "w") as f:
+        with open(os.path.join(results_dir, f"val_evaluation_{fold}_{time}.json"), "w") as f:
             json.dump(val_evaluation[fold], f)
-        with open(os.path.join(results_dir, f"test_evaluation_{fold}.json"), "w") as f:
+        with open(os.path.join(results_dir, f"test_evaluation_{fold}_{time}.json"), "w") as f:
             json.dump(test_evaluation[fold], f)
-        with open(os.path.join(results_dir, f"diff_evaluation_{fold}.json"), "w") as f:
+        with open(os.path.join(results_dir, f"diff_evaluation_{fold}_{time}.json"), "w") as f:
             json.dump(diff_evaluation[fold], f)
 
 

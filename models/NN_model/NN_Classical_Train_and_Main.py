@@ -539,7 +539,7 @@ def experiment_2():
     """
     ##### The following are different setups of hyperparams to test ########
     hyperparameters = {
-        'batch_size': [32],
+        'batch_size': [64],
         'learning_rate': [0.0001],
         'hidden_sizes': [[128, 32]],
         'optimizer': ['Adam'],
@@ -602,6 +602,6 @@ def experiment_2():
 
 
 if __name__ == "__main__":
-    experiment_1() # loop for 5 different split experiment
+   # experiment_1() # loop for 5 different split experiment
     experiment_2() # train for small levels, test for large levels
 

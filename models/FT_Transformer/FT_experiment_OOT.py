@@ -216,7 +216,7 @@ def main():
         nhead=8,
         num_layers=4,
         dim_feedforward=512,
-        dropout=0.15,
+        dropout=0.175,
         output_dim=1,
         numerical_features=model_config['numerical_features'],
         categorical_configs=model_config['categorical_configs'],
@@ -238,7 +238,7 @@ def main():
         model=model,
         train_loader=train_loader,
         val_loader=val_loader,
-        epochs=270,  # Start with 50 epochs, increase if needed
+        epochs=350,  # Start with 50 epochs, increase if needed
         learning_rate=5e-4,
         weight_decay=1e-4,
         device=device,
@@ -259,7 +259,7 @@ def main():
     plt.xlabel('Epoch')
     plt.ylabel('Loss')
     plt.title('FT-Transformer Training Progress')
-    plt.legend()
+   
     plt.grid(True)
     plt.show()
     # Make predictions with FT-Transformer
@@ -353,17 +353,73 @@ def main():
         'accuracy': accuracy_diff_ft
     }
 
-
+    time = datetime.now().strftime("%Y%m%d_%H%M%S")
     # save train_evaluation, val_evaluation, test_evaluation, diff_evaluation to json
-    with open(os.path.join(results_dir, f"train_evaluation_OOT.json"), "w") as f:
+    with open(os.path.join(results_dir, f"train_evaluation_OOT_{time}.json"), "w") as f:
         json.dump(train_evaluation_OOT, f)
-    with open(os.path.join(results_dir, f"val_evaluation_OOT.json"), "w") as f:
+    with open(os.path.join(results_dir, f"val_evaluation_OOT_{time}.json"), "w") as f:
         json.dump(val_evaluation_OOT, f)
-    with open(os.path.join(results_dir, f"test_evaluation_OOT.json"), "w") as f:
+    with open(os.path.join(results_dir, f"test_evaluation_OOT_{time}.json"), "w") as f:
         json.dump(test_evaluation_OOT, f)
-    with open(os.path.join(results_dir, f"diff_evaluation_OOT.json"), "w") as f:
+    with open(os.path.join(results_dir, f"diff_evaluation_OOT_{time}.json"), "w") as f:
         json.dump(diff_evaluation_OOT, f)
 
+    # draw a graph of test_preds_np and df_test[target_column]
+    plt.figure(figsize=(10, 6))
+    plt.scatter(df_test[target_column], np.floor(test_preds_np+0.5), alpha=0.5)
+    # mark correct predictions in graphh with red 
+    marked = np.floor(test_preds_np+0.5) == df_test[target_column]
+    plt.scatter(df_test[target_column][marked], test_preds_np[marked], alpha=0.5, color='red', label='Correct')
+    # mark incorrect predictions in graphh with blue
+    marked = np.floor(test_preds_np+0.5) != df_test[target_column]
+    plt.scatter(df_test[target_column][marked], test_preds_np[marked], alpha=0.5, color='blue', label='Incorrect')
+    # label red and blue in the graph
+    
+    plt.xlabel('True Q-Gonality')
+    plt.ylabel('Predicted Q-Gonality')
+    plt.title(f'FT-Transformer OOD Test Predictions_{accuracy_test_ft:.4f}')
+    #plt.legend()
+
+    plt.show()
+
+    # save the graph to the results_dir
+    plt.savefig(os.path.join(results_dir, f"FT_Transformer_OOD_Test_Predictions_{time}.png"))
+
+    # draw a graph of val_preds_np and df_val[target_column]
+    plt.figure(figsize=(10, 6))
+    plt.scatter(df_val[target_column], np.floor(val_preds_np+0.5), alpha=0.5)
+    # mark correct predictions in graphh with red 
+    marked = np.floor(val_preds_np+0.5) == df_val[target_column]
+    plt.scatter(df_val[target_column][marked], val_preds_np[marked], alpha=0.5, color='red', label='Correct')
+    # mark incorrect predictions in graphh with blue
+    marked = np.floor(val_preds_np+0.5) != df_val[target_column]
+    plt.scatter(df_val[target_column][marked], val_preds_np[marked], alpha=0.5, color='blue', label='Incorrect')
+    plt.xlabel('True Q-Gonality')
+    plt.ylabel('Predicted Q-Gonality')
+    plt.title(f'FT-Transformer OOD Val Predictions_{accuracy_val_ft:.4f}')
+    #plt.legend()
+    plt.show()
+    plt.savefig(os.path.join(results_dir, f"FT_Transformer_OOD_Val_Predictions_{time}.png"))
+
+    # draw a graph for df_train[target_column] and train_preds_np
+    plt.figure(figsize=(10, 6))
+    plt.scatter(df_train[target_column], np.floor(train_preds_np+0.5), alpha=0.5)
+    # mark correct predictions in graphh with red 
+    marked = np.floor(train_preds_np+0.5) == df_train[target_column]
+    plt.scatter(df_train[target_column][marked], train_preds_np[marked], alpha=0.5, color='red', label='Correct')
+    # mark incorrect predictions in graphh with blue
+    marked = np.floor(train_preds_np+0.5) != df_train[target_column]
+    plt.scatter(df_train[target_column][marked], train_preds_np[marked], alpha=0.5, color='blue', label='Incorrect')
+    plt.xlabel('True Q-Gonality')
+    plt.ylabel('Predicted Q-Gonality')
+    plt.title(f'FT-Transformer OOD Train Predictions_{accuracy_train_ft:.4f}')
+    #plt.legend()
+    plt.show()
+    plt.savefig(os.path.join(results_dir, f"FT_Transformer_OOD_Train_Predictions_{time}.png"))
+    
+    
+
+    
 
     
     
