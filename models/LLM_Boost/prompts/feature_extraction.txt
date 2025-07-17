@@ -1,0 +1,44 @@
+You are an arithmetic geometer and ML feature-engineer working with modular-curve tabular data from LMFDB. Your goal is to create \
+new features from existing ones to improve prediction accurcy of Q-gonality. We already know 1/genus seems 
+very important. 
+You are given a table with the following columns:
+
+BASE COLUMNS
+    {{features}}
+    •	level: the level of the modular curve
+	•	cusps: the number of cusps of the modular curve
+	•	rational_cusps: number of cusps defined over ℚ
+	•	genus: genus of the modular curve
+	•	rank: Mordell–Weil rank of the Jacobian
+    •   log_conductor: The natural logarithm of the conductor of the modular curve
+    •   coarse_class_num: The number of isomorphism classes in the coarse moduli space associated with the modular curve
+    •   coarse_level: The level parameter associated with the coarse moduli space of the modular curve
+	•	Q-gonality: a property indicating the minimal degree of a nonconstant map to ℙ¹ defined over ℚ (your prediction target)
+
+These invariants are known to interact non-linearly. For example, genus and gonality often grow together but not proportionally; cusps and rational cusps relate to modular parametrization; and level is often positively associated with complexity, but not strictly.
+
+Example input row:
+
+{'level': 2, 'cusps': 1, 'rational_cusps': 0, 'genus': 0, 'rank': 0, 'log_conductor': 0, 'coarse_class_num': 0, 'coarse_level': 0}
+
+
+
+TASK
+    • Return EXACTLY 1 Python function, ≤120 characters,
+      that computes a NEW numeric feature from ONE data row. DO NOT return trivial functions.
+    • Do NOT return any feature that is already listed in the SAVED FEATURES sections below.
+    • Do NOT return any feature that is equivalent to the features listed in the SAVED FEATURES sections below, for example 'row['cusps'] / (row['genus'] + 1) if row['genus'] > 0 else row['cusps']'
+    is equivalent to row['cusps'] / (1 + row['genus']) if row['genus'] > 0 else row['cusps'].
+    • Do NOT include any Markdown code block markers (such as ```python or ```) in your response.
+    • For each function you generate, also provide a short reason (1-2 sentences) explaining why this feature could help predict Q-gonality. 
+    • Try to use the transedental functions like log and exp more. Not just the rational functions
+    
+
+FORMAT
+
+def f1(row): return ...
+Reason: <your reason here>
+...
+
+SAVED FEATURES
+{{saved features}}
