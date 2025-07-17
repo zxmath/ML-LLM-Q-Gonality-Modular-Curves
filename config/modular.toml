@@ -1,7 +1,11 @@
 [info]
-local_path = "data"
+#local_path = "data"
+local_path = '/Users/xiaokangwang/Documents/PycharmProjects/MLmath_dataset'
 
-
+train_set = "q_gonality_same_train.csv"
+val_set = "q_gonality_same_val.csv"
+test_set = "q_gonality_same_test.csv"
+diff_set = "q_gonality_diff.csv"
 
 
 #data_set = "combined_data_3.h5"
