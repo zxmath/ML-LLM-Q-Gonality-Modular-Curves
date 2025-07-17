@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "ml-llm-q-gonality-modular-curves"
+version = "0.1.0"
+description = ""
+authors = ["Xiaokang Wang <52538116+Mathheadkang@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+dotenv = "^0.9.9"
+openai = "^1.96.1"
+torch = "^2.7.1"
+scikit-learn = "^1.7.0"
+pandas = "^2.3.1"
+matplotlib = "^3.10.3"
+toml = "^0.10.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
