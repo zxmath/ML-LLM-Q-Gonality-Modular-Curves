@@ -140,7 +140,7 @@ cython_debug/
 # Data files (large files)
 *.h5
 *.hdf5
-*.csv
+#*.csv
 *.parquet
 *.feather
 *.pkl
@@ -219,3 +219,5 @@ checkpoints/
 # Cache directories
 .cache/
 cache/
+# add png files
+*.png
