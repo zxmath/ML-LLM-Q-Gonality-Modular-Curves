@@ -219,7 +219,7 @@ def main():
             nhead=8,
             num_layers=4,
             dim_feedforward=512,
-            dropout=0.15,
+            dropout=0.08,
             output_dim=1,
             numerical_features=model_config['numerical_features'],
             categorical_configs=model_config['categorical_configs'],
