@@ -133,5 +133,3 @@ Example commands (from project root):
 
 
 
-**Note:**  
-This README omits details about the data and its preparation, as requested. For more information about the dataset, please refer to the original paper or contact the authors. 
